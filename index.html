@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Banner Dashboard</title>
+  <title>Banner Maker</title>
 
-  <!-- html2canvas for Download PNG -->
+  <!-- Download PNG Library -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <style>
     body{
       margin:0;
       font-family: Arial, sans-serif;
-      background:#f2f2f2;
+      background:#eaeaea;
     }
 
     .app{
@@ -23,217 +23,195 @@
     }
 
     /* Dashboard */
-    .dashboard{
-      width:320px;
-      background:#ffffff;
-      border-radius:12px;
-      padding:12px;
+    .panel{
+      width:340px;
+      background:#fff;
+      border-radius:14px;
+      padding:14px;
       box-shadow:0 0 10px rgba(0,0,0,0.15);
       height: calc(100vh - 30px);
       overflow:auto;
     }
 
-    .dashboard h2{
-      margin:0 0 10px 0;
-      font-size:18px;
-      background:#1976d2;
-      color:white;
-      padding:10px;
-      border-radius:10px;
+    .panel h2{
+      margin:0 0 12px 0;
       text-align:center;
-    }
-
-    .section{
-      margin-top:12px;
+      background:#1976d2;
+      color:#fff;
       padding:10px;
-      border:1px solid #eee;
-      border-radius:10px;
+      border-radius:12px;
+      font-size:18px;
     }
 
-    .section-title{
+    .group{
+      border:1px solid #eee;
+      border-radius:12px;
+      padding:10px;
+      margin-bottom:12px;
+    }
+
+    .group-title{
       font-weight:bold;
       margin-bottom:8px;
       font-size:14px;
       color:#333;
     }
 
-    .article{
-      background:#f7f7f7;
+    input, textarea{
+      width:100%;
       padding:10px;
       border-radius:10px;
+      border:1px solid #bbb;
+      outline:none;
+      font-size:14px;
+      box-sizing:border-box;
       margin-bottom:8px;
-      cursor:pointer;
-      border:1px solid #ddd;
-      font-size:13px;
-      line-height:1.4;
     }
 
-    .article:hover{
-      background:#eaf3ff;
-      border-color:#1976d2;
+    textarea{
+      height:80px;
+      resize:none;
     }
 
-    .bg-list{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:8px;
-    }
-
-    .bg-item{
-      height:60px;
-      border-radius:10px;
-      border:2px solid #ddd;
-      cursor:pointer;
-      background-size:cover;
-      background-position:center;
-    }
-
-    .bg-item:hover{
-      border-color:#2e7d32;
-    }
-
-    .input-row{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      margin-top:8px;
-    }
-
-    input[type="file"]{
-      width:100%;
-      font-size:13px;
-    }
-
-    button{
+    .btn{
       width:100%;
       padding:12px;
       border:none;
-      border-radius:10px;
+      border-radius:12px;
       background:#2e7d32;
-      color:white;
+      color:#fff;
       font-size:16px;
       cursor:pointer;
-      margin-top:10px;
     }
+    .btn:hover{ background:#1b5e20; }
 
-    button:hover{
-      background:#1b5e20;
-    }
-
-    /* Banner area */
-    .banner-area{
+    /* Preview */
+    .preview{
       flex:1;
-      background:#ffffff;
-      border-radius:12px;
-      padding:12px;
+      background:#fff;
+      border-radius:14px;
+      padding:14px;
       box-shadow:0 0 10px rgba(0,0,0,0.15);
       height: calc(100vh - 30px);
       overflow:auto;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
     }
 
-    /* Banner (download this) */
+    /* Banner Design */
     .banner{
       width:100%;
-      max-width:1100px;
-      margin:auto;
-      border-radius:16px;
+      max-width:1200px;
+      aspect-ratio: 16 / 9;
+      border-radius:18px;
       overflow:hidden;
       position:relative;
       background-size:cover;
       background-position:center;
       background-repeat:no-repeat;
-      padding:18px;
-      box-sizing:border-box;
-      min-height:520px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      box-shadow:0 0 18px rgba(0,0,0,0.35);
     }
 
-    .banner-overlay{
-      width:100%;
-      background: rgba(255,255,255,0.78);
-      border-radius:16px;
-      padding:18px;
-      box-sizing:border-box;
+    /* Dark overlay for text visibility */
+    .shade{
+      position:absolute;
+      inset:0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.55));
     }
 
-    .banner-row{
-      display:flex;
-      gap:18px;
-      align-items:center;
-      justify-content:space-between;
-    }
-
-    .photo-box{
-      width:22%;
-      background:rgba(255,255,255,0.92);
-      border-radius:14px;
-      padding:12px;
+    /* Top Dialog */
+    .top-dialog{
+      position:absolute;
+      top:25px;
+      left:50%;
+      transform:translateX(-50%);
+      width:92%;
       text-align:center;
-      box-shadow:0 0 8px rgba(0,0,0,0.18);
-    }
-
-    .photo-box img{
-      width:150px;
-      height:190px;
-      object-fit:cover;
-      border-radius:12px;
-      border:3px solid #2e7d32;
-    }
-
-    .remark-box{
-      width:56%;
-      background:rgba(255,255,255,0.92);
-      border-radius:14px;
-      padding:12px;
-      box-shadow:0 0 8px rgba(0,0,0,0.18);
-      box-sizing:border-box;
-    }
-
-    .remark-box textarea{
-      width:100%;
-      height:80px;
-      border-radius:10px;
-      border:1px solid #aaa;
+      font-size:52px;
+      font-weight:900;
+      color:#ffd54f;
+      text-shadow: 3px 3px 8px rgba(0,0,0,0.85);
+      line-height:1.15;
       padding:10px;
-      font-size:16px;
-      resize:none;
-      outline:none;
-      box-sizing:border-box;
+      z-index:5;
     }
 
-    .remark-banner{
-      margin-top:12px;
-      width:100%;
-      min-height:80px;
-      background:#d32f2f;
-      color:white;
-      font-size:24px;
-      font-weight:bold;
-      border-radius:12px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:14px;
-      box-sizing:border-box;
-      line-height:1.3;
+    /* Left person */
+    .left-photo{
+      position:absolute;
+      left:30px;
+      bottom:110px;
+      width:320px;
+      height:420px;
+      object-fit:cover;
+      border-radius:18px;
+      border:4px solid rgba(255,255,255,0.85);
+      z-index:6;
+      box-shadow:0 0 15px rgba(0,0,0,0.45);
     }
 
-    .note{
-      font-size:12px;
-      color:#555;
-      margin-top:10px;
-      text-align:center;
+    /* Right person */
+    .right-photo{
+      position:absolute;
+      right:30px;
+      bottom:110px;
+      width:320px;
+      height:420px;
+      object-fit:cover;
+      border-radius:18px;
+      border:4px solid rgba(255,255,255,0.85);
+      z-index:6;
+      box-shadow:0 0 15px rgba(0,0,0,0.45);
     }
 
+    /* Bottom name blocks */
+    .bottom-left{
+      position:absolute;
+      left:35px;
+      bottom:25px;
+      z-index:7;
+      color:#fff;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.85);
+    }
+
+    .bottom-right{
+      position:absolute;
+      right:35px;
+      bottom:25px;
+      z-index:7;
+      color:#fff;
+      text-align:right;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.85);
+    }
+
+    .name{
+      font-size:50px;
+      font-weight:900;
+      color:#ffd54f;
+    }
+
+    .phone{
+      font-size:48px;
+      font-weight:900;
+      margin-top:8px;
+      color:#ffffff;
+    }
+
+    /* Responsive */
     @media(max-width:900px){
-      .app{flex-direction:column;}
-      .dashboard{width:100%; height:auto;}
-      .banner-area{height:auto;}
-      .banner-row{flex-direction:column;}
-      .photo-box,.remark-box{width:100%;}
+      .app{ flex-direction:column; }
+      .panel{ width:100%; height:auto; }
+      .preview{ height:auto; }
+
+      .top-dialog{ font-size:30px; }
+      .left-photo,.right-photo{
+        width:160px;
+        height:220px;
+        bottom:90px;
+      }
+      .name{ font-size:28px; }
+      .phone{ font-size:26px; }
     }
   </style>
 </head>
@@ -242,111 +220,67 @@
 
 <div class="app">
 
-  <!-- DASHBOARD -->
-  <div class="dashboard">
-    <h2>Dashboard</h2>
+  <!-- Dashboard -->
+  <div class="panel">
+    <h2>Banner Dashboard</h2>
 
-    <!-- Articles -->
-    <div class="section">
-      <div class="section-title">Articles / Remarks (Click करें)</div>
-
-      <div class="article" onclick="setRemark(this.innerText)">
-        "ना जाति पर, ना धर्म पर, मोहर लगेगी विकास के कर्म पर।"
-      </div>
-
-      <div class="article" onclick="setRemark(this.innerText)">
-        "गांव की शान, विकास की पहचान।"
-      </div>
-
-      <div class="article" onclick="setRemark(this.innerText)">
-        "काम बोलेगा, जीत होगी।"
-      </div>
-
-      <div class="article" onclick="setRemark(this.innerText)">
-        "हर घर खुशहाली, यही हमारी जिम्मेदारी।"
-      </div>
-
-      <div class="article" onclick="setRemark(this.innerText)">
-        "साथ चलेंगे, गांव बदलेंगे।"
-      </div>
+    <div class="group">
+      <div class="group-title">ऊपर Dialog (Editable)</div>
+      <textarea id="dialogInput">बात सिर्फ कुर्सी की नहीं,
+गांव के भविष्य की है</textarea>
     </div>
 
-    <!-- Background select -->
-    <div class="section">
-      <div class="section-title">Background चुनें</div>
-
-      <div class="bg-list">
-        <div class="bg-item"
-          style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80')"
-          onclick="setBackground(this.style.backgroundImage)">
-        </div>
-
-        <div class="bg-item"
-          style="background-image:url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80')"
-          onclick="setBackground(this.style.backgroundImage)">
-        </div>
-
-        <div class="bg-item"
-          style="background-image:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80')"
-          onclick="setBackground(this.style.backgroundImage)">
-        </div>
-
-        <div class="bg-item"
-          style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80')"
-          onclick="setBackground(this.style.backgroundImage)">
-        </div>
-      </div>
+    <div class="group">
+      <div class="group-title">Left Name + Mobile</div>
+      <input id="leftName" value="सोयब" />
+      <input id="leftPhone" value="9115094156" />
+      <div class="group-title">Left Photo</div>
+      <input type="file" accept="image/*" id="leftUpload" />
     </div>
 
-    <!-- Upload images -->
-    <div class="section">
-      <div class="section-title">Photos चुनें</div>
-
-      <div class="input-row">
-        <label style="font-size:13px;">Left Photo</label>
-        <input type="file" accept="image/*" id="leftUpload">
-      </div>
-
-      <div class="input-row">
-        <label style="font-size:13px;">Right Photo</label>
-        <input type="file" accept="image/*" id="rightUpload">
-      </div>
+    <div class="group">
+      <div class="group-title">Right Name + Mobile</div>
+      <input id="rightName" value="लल्लन प्रधान" />
+      <input id="rightPhone" value="8601188104" />
+      <div class="group-title">Right Photo</div>
+      <input type="file" accept="image/*" id="rightUpload" />
     </div>
 
-    <!-- Download -->
-    <button onclick="downloadBanner()">डाउनलोड</button>
-
-    <div class="note">
-      ✅ Download PNG (Image) होगा
+    <div class="group">
+      <div class="group-title">Background (Editable)</div>
+      <input type="file" accept="image/*" id="bgUpload" />
     </div>
+
+    <button class="btn" onclick="downloadPNG()">डाउनलोड PNG</button>
   </div>
 
-  <!-- BANNER PREVIEW -->
-  <div class="banner-area">
+  <!-- Preview -->
+  <div class="preview">
 
-    <div id="bannerToDownload" class="banner"
+    <!-- This will be downloaded -->
+    <div id="banner" class="banner"
       style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80');">
 
-      <div class="banner-overlay">
-        <div class="banner-row">
+      <div class="shade"></div>
 
-          <div class="photo-box">
-            <img id="leftImg" src="https://via.placeholder.com/150x190.png?text=Photo" />
-          </div>
+      <div class="top-dialog" id="dialogText">
+        बात सिर्फ कुर्सी की नहीं,<br>गांव के भविष्य की है
+      </div>
 
-          <div class="remark-box">
-            <textarea id="textInput" placeholder="यहाँ लिखें..."></textarea>
+      <img id="leftImg" class="left-photo"
+        src="https://via.placeholder.com/320x420.png?text=Left+Photo" />
 
-            <div class="remark-banner" id="textBanner">
-              आपका Text यहाँ दिखेगा
-            </div>
-          </div>
+      <img id="rightImg" class="right-photo"
+        src="https://via.placeholder.com/320x420.png?text=Right+Photo" />
 
-          <div class="photo-box">
-            <img id="rightImg" src="https://via.placeholder.com/150x190.png?text=Photo" />
-          </div>
+      <div class="bottom-left">
+        <div class="name" id="leftNameText">सोयब</div>
+        <div class="phone" id="leftPhoneText">9115094156</div>
+      </div>
 
-        </div>
+      <div class="bottom-right">
+        <div class="name" id="rightNameText">लल्लन प्रधान</div>
+        <div class="phone" id="rightPhoneText">8601188104</div>
       </div>
 
     </div>
@@ -356,26 +290,37 @@
 </div>
 
 <script>
-  // Set remark from dashboard article
-  function setRemark(text){
-    document.getElementById("textInput").value = text;
-    document.getElementById("textBanner").innerText = text;
-  }
+  // Live update dialog
+  const dialogInput = document.getElementById("dialogInput");
+  const dialogText = document.getElementById("dialogText");
 
-  // Live typing remark
-  const textInput = document.getElementById("textInput");
-  const textBanner = document.getElementById("textBanner");
-  textInput.addEventListener("input", function(){
-    const t = textInput.value.trim();
-    textBanner.innerText = t ? t : "आपका Text यहाँ दिखेगा";
+  dialogInput.addEventListener("input", () => {
+    // new lines convert to <br>
+    const value = dialogInput.value.trim();
+    dialogText.innerHTML = value ? value.replace(/\n/g, "<br>") : "";
   });
 
-  // Set background from dashboard
-  function setBackground(bg){
-    document.getElementById("bannerToDownload").style.backgroundImage = bg;
-  }
+  // Live update names & phones
+  const leftName = document.getElementById("leftName");
+  const leftPhone = document.getElementById("leftPhone");
+  const rightName = document.getElementById("rightName");
+  const rightPhone = document.getElementById("rightPhone");
 
-  // Upload left image
+  leftName.addEventListener("input", ()=> {
+    document.getElementById("leftNameText").innerText = leftName.value;
+  });
+  leftPhone.addEventListener("input", ()=> {
+    document.getElementById("leftPhoneText").innerText = leftPhone.value;
+  });
+
+  rightName.addEventListener("input", ()=> {
+    document.getElementById("rightNameText").innerText = rightName.value;
+  });
+  rightPhone.addEventListener("input", ()=> {
+    document.getElementById("rightPhoneText").innerText = rightPhone.value;
+  });
+
+  // Upload Left Image
   document.getElementById("leftUpload").addEventListener("change", function(e){
     const file = e.target.files[0];
     if(file){
@@ -383,7 +328,7 @@
     }
   });
 
-  // Upload right image
+  // Upload Right Image
   document.getElementById("rightUpload").addEventListener("change", function(e){
     const file = e.target.files[0];
     if(file){
@@ -391,11 +336,20 @@
     }
   });
 
-  // Download banner as PNG
-  function downloadBanner(){
-    const banner = document.getElementById("bannerToDownload");
+  // Upload Background
+  document.getElementById("bgUpload").addEventListener("change", function(e){
+    const file = e.target.files[0];
+    if(file){
+      const url = URL.createObjectURL(file);
+      document.getElementById("banner").style.backgroundImage = `url('${url}')`;
+    }
+  });
 
-    html2canvas(banner, {scale: 2}).then(canvas => {
+  // Download PNG
+  function downloadPNG(){
+    const banner = document.getElementById("banner");
+
+    html2canvas(banner, { scale: 2 }).then(canvas => {
       const link = document.createElement("a");
       link.download = "banner.png";
       link.href = canvas.toDataURL("image/png");
