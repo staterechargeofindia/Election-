@@ -87,6 +87,7 @@
       outline: none;
     }
 
+    /* Only ONE remark banner */
     .text-banner {
       margin-top: 15px;
       padding: 15px;
@@ -133,8 +134,11 @@
 
         <!-- CENTER TEXT -->
         <div class="center-section">
+
+          <!-- Input box -->
           <textarea id="textInput" placeholder="यहाँ लिखें..."></textarea>
 
+          <!-- Remark only ONE place -->
           <div class="text-banner" id="textBanner">
             आपका Text यहाँ दिखेगा
           </div>
@@ -170,7 +174,7 @@
       }
     });
 
-    // Live text banner
+    // Live text banner (only ONE)
     const textInput = document.getElementById("textInput");
     const textBanner = document.getElementById("textBanner");
 
