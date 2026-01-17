@@ -3,188 +3,406 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Banner</title>
+  <title>Banner Dashboard</title>
+
+  <!-- html2canvas for Download PNG -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
   <style>
-    body {
-      margin: 0;
+    body{
+      margin:0;
       font-family: Arial, sans-serif;
+      background:#f2f2f2;
     }
 
-    /* Background Fixed */
-    .banner {
-      width: 100%;
-      min-height: 100vh;
-      background-image: url("https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      box-sizing: border-box;
+    .app{
+      display:flex;
+      gap:15px;
+      padding:15px;
+      box-sizing:border-box;
     }
 
-    .overlay {
-      width: 95%;
-      max-width: 1100px;
-      background: rgba(255, 255, 255, 0.80);
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0px 0px 15px rgba(0,0,0,0.4);
+    /* Dashboard */
+    .dashboard{
+      width:320px;
+      background:#ffffff;
+      border-radius:12px;
+      padding:12px;
+      box-shadow:0 0 10px rgba(0,0,0,0.15);
+      height: calc(100vh - 30px);
+      overflow:auto;
     }
 
-    /* Main row */
-    .main {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
+    .dashboard h2{
+      margin:0 0 10px 0;
+      font-size:18px;
+      background:#1976d2;
+      color:white;
+      padding:10px;
+      border-radius:10px;
+      text-align:center;
     }
 
-    /* Left & Right Photo */
-    .photo-section {
-      width: 22%;
-      text-align: center;
-      background: rgba(255,255,255,0.9);
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0px 0px 8px rgba(0,0,0,0.2);
+    .section{
+      margin-top:12px;
+      padding:10px;
+      border:1px solid #eee;
+      border-radius:10px;
     }
 
-    .photo-section img {
-      width: 150px;
-      height: 190px;
-      object-fit: cover;
-      border-radius: 12px;
-      border: 3px solid #2e7d32;
-      margin-bottom: 10px;
+    .section-title{
+      font-weight:bold;
+      margin-bottom:8px;
+      font-size:14px;
+      color:#333;
     }
 
-    .photo-section input {
-      width: 100%;
-      font-size: 14px;
+    .article{
+      background:#f7f7f7;
+      padding:10px;
+      border-radius:10px;
+      margin-bottom:8px;
+      cursor:pointer;
+      border:1px solid #ddd;
+      font-size:13px;
+      line-height:1.4;
     }
 
-    /* Center full width remark area */
-    .center-section {
-      width: 56%;
-      background: rgba(255,255,255,0.9);
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0px 0px 8px rgba(0,0,0,0.2);
+    .article:hover{
+      background:#eaf3ff;
+      border-color:#1976d2;
     }
 
-    textarea {
-      width: 100%;
-      height: 70px;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 10px;
-      border: 1px solid #999;
-      resize: none;
-      outline: none;
-      box-sizing: border-box;
+    .bg-list{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:8px;
     }
 
-    /* Remark Banner (चौड़ाई में) */
-    .text-banner {
-      margin-top: 15px;
-      width: 100%;
-      padding: 18px;
-      background: #d32f2f;
-      color: white;
-      font-size: 24px;
-      font-weight: bold;
-      border-radius: 12px;
-      min-height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      box-sizing: border-box;
+    .bg-item{
+      height:60px;
+      border-radius:10px;
+      border:2px solid #ddd;
+      cursor:pointer;
+      background-size:cover;
+      background-position:center;
     }
 
-    .btn-download {
-      margin-top: 15px;
-      width: 100%;
-      padding: 12px 18px;
-      border: none;
-      background: #1976d2;
-      color: white;
-      font-size: 16px;
-      border-radius: 10px;
-      cursor: pointer;
+    .bg-item:hover{
+      border-color:#2e7d32;
     }
 
-    .btn-download:hover {
-      background: #0d47a1;
+    .input-row{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-top:8px;
+    }
+
+    input[type="file"]{
+      width:100%;
+      font-size:13px;
+    }
+
+    button{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      background:#2e7d32;
+      color:white;
+      font-size:16px;
+      cursor:pointer;
+      margin-top:10px;
+    }
+
+    button:hover{
+      background:#1b5e20;
+    }
+
+    /* Banner area */
+    .banner-area{
+      flex:1;
+      background:#ffffff;
+      border-radius:12px;
+      padding:12px;
+      box-shadow:0 0 10px rgba(0,0,0,0.15);
+      height: calc(100vh - 30px);
+      overflow:auto;
+    }
+
+    /* Banner (download this) */
+    .banner{
+      width:100%;
+      max-width:1100px;
+      margin:auto;
+      border-radius:16px;
+      overflow:hidden;
+      position:relative;
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+      padding:18px;
+      box-sizing:border-box;
+      min-height:520px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .banner-overlay{
+      width:100%;
+      background: rgba(255,255,255,0.78);
+      border-radius:16px;
+      padding:18px;
+      box-sizing:border-box;
+    }
+
+    .banner-row{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .photo-box{
+      width:22%;
+      background:rgba(255,255,255,0.92);
+      border-radius:14px;
+      padding:12px;
+      text-align:center;
+      box-shadow:0 0 8px rgba(0,0,0,0.18);
+    }
+
+    .photo-box img{
+      width:150px;
+      height:190px;
+      object-fit:cover;
+      border-radius:12px;
+      border:3px solid #2e7d32;
+    }
+
+    .remark-box{
+      width:56%;
+      background:rgba(255,255,255,0.92);
+      border-radius:14px;
+      padding:12px;
+      box-shadow:0 0 8px rgba(0,0,0,0.18);
+      box-sizing:border-box;
+    }
+
+    .remark-box textarea{
+      width:100%;
+      height:80px;
+      border-radius:10px;
+      border:1px solid #aaa;
+      padding:10px;
+      font-size:16px;
+      resize:none;
+      outline:none;
+      box-sizing:border-box;
+    }
+
+    .remark-banner{
+      margin-top:12px;
+      width:100%;
+      min-height:80px;
+      background:#d32f2f;
+      color:white;
+      font-size:24px;
+      font-weight:bold;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:14px;
+      box-sizing:border-box;
+      line-height:1.3;
+    }
+
+    .note{
+      font-size:12px;
+      color:#555;
+      margin-top:10px;
+      text-align:center;
+    }
+
+    @media(max-width:900px){
+      .app{flex-direction:column;}
+      .dashboard{width:100%; height:auto;}
+      .banner-area{height:auto;}
+      .banner-row{flex-direction:column;}
+      .photo-box,.remark-box{width:100%;}
     }
   </style>
 </head>
 
 <body>
 
-  <div class="banner">
-    <div class="overlay">
+<div class="app">
 
-      <div class="main">
+  <!-- DASHBOARD -->
+  <div class="dashboard">
+    <h2>Dashboard</h2>
 
-        <!-- LEFT IMAGE -->
-        <div class="photo-section">
-          <img id="leftImg" src="https://via.placeholder.com/150x190.png?text=Photo" />
-          <input type="file" accept="image/*" id="leftUpload">
-        </div>
+    <!-- Articles -->
+    <div class="section">
+      <div class="section-title">Articles / Remarks (Click करें)</div>
 
-        <!-- CENTER REMARK FULL WIDTH -->
-        <div class="center-section">
-          <textarea id="textInput" placeholder="यहाँ Remark लिखें..."></textarea>
-
-          <div class="text-banner" id="textBanner">
-            आपका Remark यहाँ दिखेगा
-          </div>
-
-          <button class="btn-download" onclick="window.print()">डाउनलोड करें</button>
-        </div>
-
-        <!-- RIGHT IMAGE -->
-        <div class="photo-section">
-          <img id="rightImg" src="https://via.placeholder.com/150x190.png?text=Photo" />
-          <input type="file" accept="image/*" id="rightUpload">
-        </div>
-
+      <div class="article" onclick="setRemark(this.innerText)">
+        "ना जाति पर, ना धर्म पर, मोहर लगेगी विकास के कर्म पर।"
       </div>
 
+      <div class="article" onclick="setRemark(this.innerText)">
+        "गांव की शान, विकास की पहचान।"
+      </div>
+
+      <div class="article" onclick="setRemark(this.innerText)">
+        "काम बोलेगा, जीत होगी।"
+      </div>
+
+      <div class="article" onclick="setRemark(this.innerText)">
+        "हर घर खुशहाली, यही हमारी जिम्मेदारी।"
+      </div>
+
+      <div class="article" onclick="setRemark(this.innerText)">
+        "साथ चलेंगे, गांव बदलेंगे।"
+      </div>
+    </div>
+
+    <!-- Background select -->
+    <div class="section">
+      <div class="section-title">Background चुनें</div>
+
+      <div class="bg-list">
+        <div class="bg-item"
+          style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80')"
+          onclick="setBackground(this.style.backgroundImage)">
+        </div>
+
+        <div class="bg-item"
+          style="background-image:url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80')"
+          onclick="setBackground(this.style.backgroundImage)">
+        </div>
+
+        <div class="bg-item"
+          style="background-image:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80')"
+          onclick="setBackground(this.style.backgroundImage)">
+        </div>
+
+        <div class="bg-item"
+          style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80')"
+          onclick="setBackground(this.style.backgroundImage)">
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload images -->
+    <div class="section">
+      <div class="section-title">Photos चुनें</div>
+
+      <div class="input-row">
+        <label style="font-size:13px;">Left Photo</label>
+        <input type="file" accept="image/*" id="leftUpload">
+      </div>
+
+      <div class="input-row">
+        <label style="font-size:13px;">Right Photo</label>
+        <input type="file" accept="image/*" id="rightUpload">
+      </div>
+    </div>
+
+    <!-- Download -->
+    <button onclick="downloadBanner()">डाउनलोड</button>
+
+    <div class="note">
+      ✅ Download PNG (Image) होगा
     </div>
   </div>
 
-  <script>
-    // Left upload
-    document.getElementById("leftUpload").addEventListener("change", function(e){
-      const file = e.target.files[0];
-      if(file){
-        document.getElementById("leftImg").src = URL.createObjectURL(file);
-      }
-    });
+  <!-- BANNER PREVIEW -->
+  <div class="banner-area">
 
-    // Right upload
-    document.getElementById("rightUpload").addEventListener("change", function(e){
-      const file = e.target.files[0];
-      if(file){
-        document.getElementById("rightImg").src = URL.createObjectURL(file);
-      }
-    });
+    <div id="bannerToDownload" class="banner"
+      style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80');">
 
-    // Live remark
-    const textInput = document.getElementById("textInput");
-    const textBanner = document.getElementById("textBanner");
+      <div class="banner-overlay">
+        <div class="banner-row">
 
-    textInput.addEventListener("input", function(){
-      const text = textInput.value.trim();
-      textBanner.innerText = text ? text : "आपका Remark यहाँ दिखेगा";
+          <div class="photo-box">
+            <img id="leftImg" src="https://via.placeholder.com/150x190.png?text=Photo" />
+          </div>
+
+          <div class="remark-box">
+            <textarea id="textInput" placeholder="यहाँ लिखें..."></textarea>
+
+            <div class="remark-banner" id="textBanner">
+              आपका Text यहाँ दिखेगा
+            </div>
+          </div>
+
+          <div class="photo-box">
+            <img id="rightImg" src="https://via.placeholder.com/150x190.png?text=Photo" />
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  // Set remark from dashboard article
+  function setRemark(text){
+    document.getElementById("textInput").value = text;
+    document.getElementById("textBanner").innerText = text;
+  }
+
+  // Live typing remark
+  const textInput = document.getElementById("textInput");
+  const textBanner = document.getElementById("textBanner");
+  textInput.addEventListener("input", function(){
+    const t = textInput.value.trim();
+    textBanner.innerText = t ? t : "आपका Text यहाँ दिखेगा";
+  });
+
+  // Set background from dashboard
+  function setBackground(bg){
+    document.getElementById("bannerToDownload").style.backgroundImage = bg;
+  }
+
+  // Upload left image
+  document.getElementById("leftUpload").addEventListener("change", function(e){
+    const file = e.target.files[0];
+    if(file){
+      document.getElementById("leftImg").src = URL.createObjectURL(file);
+    }
+  });
+
+  // Upload right image
+  document.getElementById("rightUpload").addEventListener("change", function(e){
+    const file = e.target.files[0];
+    if(file){
+      document.getElementById("rightImg").src = URL.createObjectURL(file);
+    }
+  });
+
+  // Download banner as PNG
+  function downloadBanner(){
+    const banner = document.getElementById("bannerToDownload");
+
+    html2canvas(banner, {scale: 2}).then(canvas => {
+      const link = document.createElement("a");
+      link.download = "banner.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
     });
-  </script>
+  }
+</script>
 
 </body>
 </html>
