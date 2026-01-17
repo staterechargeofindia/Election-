@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Public Banner</title>
+  <title>Banner</title>
 
   <style>
     body {
@@ -11,13 +11,14 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Background Public Image */
+    /* Background Fixed */
     .banner {
       width: 100%;
       min-height: 100vh;
       background-image: url("https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80");
       background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -25,7 +26,6 @@
       box-sizing: border-box;
     }
 
-    /* White overlay for readability */
     .overlay {
       width: 95%;
       max-width: 1100px;
@@ -33,14 +33,6 @@
       border-radius: 15px;
       padding: 20px;
       box-shadow: 0px 0px 15px rgba(0,0,0,0.4);
-    }
-
-    .top-title {
-      text-align: center;
-      font-size: 28px;
-      font-weight: bold;
-      color: #0d47a1;
-      margin-bottom: 10px;
     }
 
     .main {
@@ -74,7 +66,7 @@
       font-size: 14px;
     }
 
-    /* Center remark */
+    /* Center text */
     .center-section {
       width: 50%;
       text-align: center;
@@ -95,7 +87,7 @@
       outline: none;
     }
 
-    .remark-banner {
+    .text-banner {
       margin-top: 15px;
       padding: 15px;
       background: #d32f2f;
@@ -109,7 +101,7 @@
       justify-content: center;
     }
 
-    .btn-print {
+    .btn-download {
       margin-top: 15px;
       padding: 10px 18px;
       border: none;
@@ -120,7 +112,7 @@
       cursor: pointer;
     }
 
-    .btn-print:hover {
+    .btn-download:hover {
       background: #0d47a1;
     }
   </style>
@@ -131,33 +123,28 @@
   <div class="banner">
     <div class="overlay">
 
-      <div class="top-title">📢 Public Support Banner 📢</div>
-
       <div class="main">
 
         <!-- LEFT IMAGE -->
         <div class="photo-section">
-          <h3>👤 Candidate</h3>
-          <img id="leftImg" src="https://via.placeholder.com/150x190.png?text=Candidate" />
+          <img id="leftImg" src="https://via.placeholder.com/150x190.png?text=Photo" />
           <input type="file" accept="image/*" id="leftUpload">
         </div>
 
-        <!-- CENTER REMARK -->
+        <!-- CENTER TEXT -->
         <div class="center-section">
-          <h3>📝 Remark लिखिए</h3>
-          <textarea id="remarkInput" placeholder="यहाँ अपना Remark लिखिए..."></textarea>
+          <textarea id="textInput" placeholder="यहाँ लिखें..."></textarea>
 
-          <div class="remark-banner" id="remarkBanner">
-            ✨ आपका Remark यहाँ दिखेगा ✨
+          <div class="text-banner" id="textBanner">
+            आपका Text यहाँ दिखेगा
           </div>
 
-          <button class="btn-print" onclick="window.print()">🖨️ Print / Save</button>
+          <button class="btn-download" onclick="window.print()">डाउनलोड करें</button>
         </div>
 
         <!-- RIGHT IMAGE -->
         <div class="photo-section">
-          <h3>🤝 Supporter</h3>
-          <img id="rightImg" src="https://via.placeholder.com/150x190.png?text=Supporter" />
+          <img id="rightImg" src="https://via.placeholder.com/150x190.png?text=Photo" />
           <input type="file" accept="image/*" id="rightUpload">
         </div>
 
@@ -183,13 +170,13 @@
       }
     });
 
-    // Remark live
-    const remarkInput = document.getElementById("remarkInput");
-    const remarkBanner = document.getElementById("remarkBanner");
+    // Live text banner
+    const textInput = document.getElementById("textInput");
+    const textBanner = document.getElementById("textBanner");
 
-    remarkInput.addEventListener("input", function(){
-      const text = remarkInput.value.trim();
-      remarkBanner.innerText = text ? text : "✨ आपका Remark यहाँ दिखेगा ✨";
+    textInput.addEventListener("input", function(){
+      const text = textInput.value.trim();
+      textBanner.innerText = text ? text : "आपका Text यहाँ दिखेगा";
     });
   </script>
 
